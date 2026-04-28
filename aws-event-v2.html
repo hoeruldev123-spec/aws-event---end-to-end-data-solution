@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="id" data-rg-mode="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>End-to-End Data Solution | All Data International × AWS</title>
+
+<!-- Plus Jakarta Sans sebagai web-safe substitute Amazon Ember Display -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   AWS DESIGN TOKENS — diekstrak dari HTML referensi AWS
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Typography — Amazon Ember stack */
+  --font-display: "Plus Jakarta Sans", "Amazon Ember Display", "Amazon Ember", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body:    "Plus Jakarta Sans", "Amazon Ember", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Color base — gray scale AWS */
+  --gray-0:   #ffffff;
+  --gray-50:  #fcfcfd;
+  --gray-100: #f9f9fb;
+  --gray-150: #f6f6f9;
+  --gray-200: #f3f3f7;
+  --gray-250: #ebebf0;
+  --gray-300: #dedee3;
+  --gray-350: #ccccd1;
+  --gray-400: #b4b4bb;
+  --gray-450: #a4a4ad;
+  --gray-500: #8c8c94;
+  --gray-550: #72747e;
+  --gray-600: #656871;
+  --gray-650: #424650;
+  --gray-700: #333843;
+  --gray-750: #232b37;
+  --gray-800: #1b232d;
+  --gray-850: #161d26;  /* text-primary / background-inverted */
+  --gray-900: #131920;
+  --gray-950: #0f141a;  /* page background dark */
+  --gray-1000:#06080a;
+
+  /* AWS amber */
+  --amber-400: #f90;         /* AWS signature orange */
+  --amber-500: #fa6f00;
+  --amber-600: #d14600;
+
+  /* AWS blue */
+  --blue-500:  #0099ff;
+  --blue-600:  #006ce0;      /* link, CTA */
+  --blue-700:  #004a9e;
+  --blue-800:  #003b8f;      /* link hover */
+  --blue-900:  #002a66;
+
+  /* AWS amber background */
+  --amber-bg:  #ffe8bd;
+  --blue-bg:   #d1f1ff;
+
+  /* Semantic tokens */
+  --color-page-bg:       var(--gray-0);
+  --color-page-bg-inv:   var(--gray-950);
+  --color-object-bg:     var(--gray-200);
+  --color-object-bg-inv: var(--gray-750);
+  --color-text-primary:  var(--gray-850);
+  --color-text-body:     var(--gray-750);
+  --color-text-faded:    var(--gray-550);
+  --color-text-title:    var(--gray-850);
+  --color-text-title-inv:#ffffff;
+  --color-border-low:    var(--gray-350);
+  --color-border-med:    var(--gray-550);
+  --color-link:          var(--blue-600);
+  --color-link-hover:    var(--blue-800);
+
+  /* Button tokens */
+  --btn-primary-bg:  var(--gray-850);
+  --btn-primary-fg:  #ffffff;
+  --btn-radius:      40px;
+  --btn-border:      2px solid var(--gray-850);
+  --btn-height:      44px;
+  --btn-pad-h:       24px;
+
+  /* Radius */
+  --radius-1: 4px;
+  --radius-2: 8px;
+  --radius-3: 12px;
+  --radius-4: 16px;
+  --radius-6: 24px;
+  --radius-10: 40px;
+
+  /* Shadow */
+  --shadow-1: 1px 1px 20px rgba(0,0,0,.1);
+  --shadow-2: 1px 1px 24px rgba(0,0,0,.25);
+
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 80px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text-body);
+  background: var(--color-page-bg);
+  overflow-x: hidden;
+}
+a { color: var(--color-link); text-decoration: none; }
+a:hover { color: var(--color-link-hover); }
+img { display: block; max-width: 100%; }
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY — Amazon Ember scale
+   ═══════════════════════════════════════════════════════════════ */
+.t-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--color-text-title);
+  letter-spacing: -0.015em;
+}
+.t-display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-text-title);
+  letter-spacing: -0.01em;
+}
+.t-display-md {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-text-title);
+}
+.t-heading {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+}
+.t-body-lg { font-size: 18px; font-weight: 400; line-height: 1.6; color: var(--color-text-body); }
+.t-body    { font-size: 16px; font-weight: 400; line-height: 1.5; color: var(--color-text-body); }
+.t-body-sm { font-size: 14px; font-weight: 400; line-height: 1.43; color: var(--color-text-faded); }
+.t-label   { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.t-inv     { color: #ffffff !important; }
+.t-inv-muted { color: rgba(255,255,255,.65) !important; }
+.t-amber { color: var(--amber-400); }
+.t-blue  { color: var(--blue-600); }
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS — AWS pill style
+   ═══════════════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--btn-height);
+  padding: 8px var(--btn-pad-h);
+  border-radius: var(--btn-radius);
+  border: var(--btn-border);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: all .3s ease;
+  white-space: nowrap;
+}
+/* Primary — black fill (AWS default) */
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+  border-color: var(--btn-primary-bg);
+}
+.btn-primary:hover {
+  background: var(--gray-700);
+  border-color: var(--gray-700);
+  color: #fff;
+}
+/* Primary on dark bg — white fill */
+.btn-primary-inv {
+  background: #ffffff;
+  color: var(--gray-850);
+  border-color: #ffffff;
+}
+.btn-primary-inv:hover { background: var(--gray-100); border-color: var(--gray-100); }
+
+/* Secondary — outlined */
+.btn-secondary {
+  background: transparent;
+  color: var(--gray-850);
+  border-color: var(--gray-850);
+}
+.btn-secondary:hover { background: var(--gray-200); color: var(--gray-850); }
+
+/* Secondary on dark — white outline */
+.btn-secondary-inv {
+  background: transparent;
+  color: #ffffff;
+  border-color: rgba(255,255,255,.6);
+}
+.btn-secondary-inv:hover { border-color: #ffffff; color: #ffffff; background: rgba(255,255,255,.08); }
+
+/* Amber CTA */
+.btn-amber {
+  background: var(--amber-400);
+  color: var(--gray-850);
+  border-color: var(--amber-400);
+  font-weight: 700;
+}
+.btn-amber:hover { background: var(--amber-500); border-color: var(--amber-500); color: #fff; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+.section { padding: var(--space-xl) 0; }
+.section-sm { padding: 56px 0; }
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .section { padding: 56px 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVBAR
+   ═══════════════════════════════════════════════════════════════ */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--gray-950);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  height: 64px;
+  display: flex; align-items: center;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 16px;
+  text-decoration: none;
+}
+.nav-brand-adi {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: #ffffff; letter-spacing: -.01em;
+}
+.nav-sep { width: 1px; height: 20px; background: rgba(255,255,255,.18); }
+.nav-brand-aws {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 700;
+  color: var(--amber-400);
+  letter-spacing: .02em;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,.65);
+  transition: color .2s;
+}
+.nav-links a:hover { color: #ffffff; }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+
+@media (max-width: 900px) { .nav-links { display: none; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════════ */
+.hero {
+  background: var(--gray-950);
+  padding: 120px 0 80px;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle dot grid — AWS-style */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+/* Amber glow top-right */
+.hero::after {
+  content: '';
+  position: absolute; top: -80px; right: -100px;
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, rgba(255,153,0,.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 64px;
+  align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,153,0,.1);
+  border: 1px solid rgba(255,153,0,.25);
+  color: var(--amber-400);
+  padding: 5px 14px;
+  border-radius: var(--radius-10);
+  margin-bottom: 20px;
+}
+.hero-eyebrow .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%; background: var(--amber-400);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.hero h1 { margin: 12px 0 20px; }
+.hero h1 .highlight { color: var(--amber-400); }
+.hero-meta {
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 28px 0 36px;
+}
+.hero-meta-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: rgba(255,255,255,.55);
+}
+.hero-meta-row svg { color: var(--amber-400); flex-shrink: 0; margin-top: 1px; }
+.hero-meta-row strong { color: rgba(255,255,255,.85); font-weight: 500; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Right panel */
+.hero-panel {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-4);
+  overflow: hidden;
+}
+.hero-panel-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hero-panel-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--amber-400);
+}
+.hero-panel-badge {
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.06);
+  padding: 2px 8px; border-radius: var(--radius-10);
+}
+.hero-topics { padding: 8px 0; }
+.hero-topic {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 20px;
+  transition: background .2s;
+}
+.hero-topic:hover { background: rgba(255,255,255,.04); }
+.hero-topic + .hero-topic { border-top: 1px solid rgba(255,255,255,.05); }
+.topic-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  border-radius: var(--radius-2);
+  background: rgba(255,153,0,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+}
+.topic-text { font-size: 14px; font-weight: 500; color: rgba(255,255,255,.85); }
+.topic-sub  { font-size: 12px; color: rgba(255,255,255,.35); margin-top: 2px; }
+.hero-panel-footer {
+  padding: 14px 20px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,153,0,.06);
+  font-size: 12px; color: rgba(255,255,255,.45);
+  display: flex; align-items: center; gap: 6px;
+}
+
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-panel { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   OVERVIEW
+   ═══════════════════════════════════════════════════════════════ */
+.overview {
+  background: var(--gray-0);
+  border-bottom: 1px solid var(--color-border-low);
+}
+.overview-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+.section-eyebrow {
+  display: inline-block;
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--blue-600);
+  margin-bottom: 12px;
+}
+.section-eyebrow::before {
+  content: ''; display: inline-block;
+  width: 16px; height: 2px;
+  background: var(--blue-600);
+  vertical-align: middle; margin-right: 8px;
+}
+.overview-desc {
+  font-size: 16px; color: var(--color-text-faded);
+  line-height: 1.75; margin: 16px 0 32px;
+}
+.overview-points { display: flex; flex-direction: column; gap: 0; }
+.overview-point {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border-low);
+}
+.overview-point:first-child { padding-top: 0; }
+.overview-point:last-child { border-bottom: none; }
+.point-num {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 500;
+  color: var(--gray-250);
+  flex-shrink: 0; min-width: 36px;
+  line-height: 1;
+}
+.point-title {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+.point-desc { font-size: 14px; color: var(--color-text-faded); line-height: 1.65; }
+
+/* AWS arch card — dark */
+.arch-card {
+  background: var(--gray-950);
+  border-radius: var(--radius-4);
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+}
+.arch-card-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.arch-card-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--amber-400);
+}
+.arch-flow { padding: 16px 24px; display: flex; flex-direction: column; gap: 0; }
+.arch-step {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius-2);
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  transition: background .2s;
+}
+.arch-step:hover { background: rgba(255,255,255,.08); }
+.arch-connector {
+  width: 2px; height: 16px;
+  background: linear-gradient(to bottom, rgba(255,153,0,.4), rgba(255,153,0,.1));
+  margin: 0 0 0 22px;
+}
+.arch-step-ico {
+  width: 32px; height: 32px; border-radius: var(--radius-2);
+  background: rgba(255,153,0,.1);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 15px;
+}
+.arch-step-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.85); }
+.arch-step-tools { font-size: 11px; color: rgba(255,255,255,.35); margin-top: 2px; }
+.arch-tier {
+  margin-left: auto; flex-shrink: 0;
+  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  color: var(--amber-400);
+  background: rgba(255,153,0,.1);
+  border: 1px solid rgba(255,153,0,.2);
+  padding: 2px 8px; border-radius: var(--radius-10);
+}
+.arch-card-footer {
+  padding: 12px 24px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.02);
+  font-size: 11px; color: rgba(255,255,255,.3);
+}
+
+@media (max-width: 768px) {
+  .overview-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LEARNING
+   ═══════════════════════════════════════════════════════════════ */
+.learning {
+  background: var(--gray-100);
+  border-bottom: 1px solid var(--color-border-low);
+}
+.learn-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  margin-top: 40px;
+}
+.learn-card {
+  background: var(--gray-0);
+  border: 1px solid var(--color-border-low);
+  border-radius: var(--radius-4);
+  padding: 28px;
+  box-shadow: var(--shadow-1);
+  transition: box-shadow .3s, transform .3s, border-color .3s;
+  position: relative; overflow: hidden;
+}
+.learn-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+  border-color: var(--gray-400);
+}
+.learn-num {
+  font-family: var(--font-display);
+  font-size: 48px; font-weight: 500;
+  color: var(--gray-250);
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: -.02em;
+}
+.learn-card h3 {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 10px;
+}
+.learn-card p { font-size: 14px; color: var(--color-text-faded); line-height: 1.65; }
+.learn-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px;
+}
+.tag {
+  font-size: 12px; font-weight: 500;
+  color: var(--blue-600);
+  background: var(--blue-bg);
+  padding: 3px 10px; border-radius: var(--radius-10);
+}
+
+@media (max-width: 600px) { .learn-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   SPEAKERS
+   ═══════════════════════════════════════════════════════════════ */
+.speakers { background: var(--gray-950); }
+.speakers .section-eyebrow { color: var(--amber-400); }
+.speakers .section-eyebrow::before { background: var(--amber-400); }
+.speakers-grid {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  justify-content: center;
+  margin-top: 40px;
+}
+.speaker-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-4);
+  padding: 24px 20px;
+  width: 186px;
+  text-align: center;
+  transition: background .25s, border-color .25s, transform .25s;
+}
+.speaker-card:hover {
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,153,0,.35);
+  transform: translateY(-3px);
+}
+.speaker-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  color: rgba(255,255,255,.8);
+  border: 1.5px solid rgba(255,153,0,.3);
+  background: linear-gradient(135deg, rgba(255,153,0,.15) 0%, rgba(0,108,224,.15) 100%);
+}
+.speaker-name {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 700;
+  color: #ffffff; margin-bottom: 4px;
+}
+.speaker-role { font-size: 12px; color: rgba(255,255,255,.4); line-height: 1.5; }
+.speaker-org {
+  margin-top: 10px;
+  font-size: 10px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--amber-400);
+}
+
+@media (max-width: 600px) {
+  .speaker-card { width: calc(50% - 8px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EVENT DETAILS + REGISTER
+   ═══════════════════════════════════════════════════════════════ */
+.details {
+  background: var(--gray-0);
+  border-bottom: 1px solid var(--color-border-low);
+}
+.details-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+}
+.detail-list { display: flex; flex-direction: column; gap: 0; margin-top: 28px; }
+.detail-row {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border-low);
+}
+.detail-row:last-child { border-bottom: none; }
+.detail-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: var(--radius-2);
+  background: var(--amber-bg);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--amber-600);
+}
+.detail-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--color-text-faded);
+  margin-bottom: 4px;
+}
+.detail-value {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+/* Register card */
+.register-card {
+  background: var(--gray-0);
+  border: 1px solid var(--color-border-low);
+  border-radius: var(--radius-4);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
+  position: sticky; top: 82px;
+}
+.register-card-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--color-border-low);
+}
+.register-card-header h3 {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+.register-card-body { padding: 20px 28px 28px; }
+.field-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.field-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  background: var(--gray-100);
+  border: 1px solid var(--color-border-low);
+  border-radius: var(--radius-2);
+  font-size: 14px; color: var(--color-text-faded);
+}
+.field-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--amber-400); flex-shrink: 0;
+}
+.register-note {
+  margin-top: 14px; text-align: center;
+  font-size: 12px; color: var(--color-text-faded);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.register-note svg { color: var(--color-text-faded); }
+
+@media (max-width: 900px) {
+  .details-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 700px) {
+  .detail-4col { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CTA BAND
+   ═══════════════════════════════════════════════════════════════ */
+.cta-band {
+  background: var(--gray-850);
+  padding: var(--space-xl) 0;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+/* Subtle noise texture feel */
+.cta-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+/* amber glow */
+.cta-band::after {
+  content: '';
+  position: absolute; left: 50%; top: -60px;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(255,153,0,.10) 0%, transparent 65%);
+}
+.cta-band-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+.cta-band h2 { margin: 12px 0 16px; }
+.cta-band .sub { margin-bottom: 36px; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+footer {
+  background: var(--gray-1000);
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 56px 0 0;
+}
+.footer-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 36px;
+}
+.footer-brand-name {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: rgba(255,255,255,.7); margin-bottom: 8px;
+}
+.footer-brand-tagline {
+  font-size: 13px; color: rgba(255,255,255,.3);
+  max-width: 220px; line-height: 1.6;
+}
+.footer-social { display: flex; gap: 10px; margin-top: 16px; }
+.social-icon {
+  width: 34px; height: 34px; border-radius: var(--radius-2);
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.45); text-decoration: none;
+  transition: all .25s;
+}
+.social-icon:hover {
+  background: rgba(255,153,0,.15);
+  border-color: rgba(255,153,0,.3);
+  color: var(--amber-400);
+}
+.footer-cols {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  padding-bottom: 48px;
+}
+.footer-col h6 {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.3); margin-bottom: 14px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.footer-col ul a {
+  font-size: 14px; color: rgba(255,255,255,.45);
+  transition: color .2s;
+}
+.footer-col ul a:hover { color: rgba(255,255,255,.85); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 20px 0;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copyright { font-size: 12px; color: rgba(255,255,255,.2); }
+.footer-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: .05em;
+  color: var(--amber-400);
+  border: 1px solid rgba(255,153,0,.2);
+  padding: 4px 12px; border-radius: var(--radius-10);
+}
+
+@media (max-width: 768px) {
+  .footer-top { flex-direction: column; gap: 24px; }
+  .footer-cols { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(2) { transition-delay: .08s; }
+.reveal:nth-child(3) { transition-delay: .16s; }
+.reveal:nth-child(4) { transition-delay: .24s; }
+.reveal:nth-child(5) { transition-delay: .32s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   EMBEDDED REGISTRATION FORM
+   ═══════════════════════════════════════════════════════════════ */
+.reg-form {
+  padding: 20px 20px 16px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.reg-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.reg-field { display: flex; flex-direction: column; gap: 5px; }
+.reg-label {
+  font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .02em;
+}
+.req { color: var(--amber-400); }
+.reg-input {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-2);
+  padding: 9px 12px;
+  font-family: var(--font-body);
+  font-size: 14px; color: rgba(255,255,255,.9);
+  outline: none;
+  transition: border-color .2s, background .2s;
+  width: 100%;
+}
+.reg-input::placeholder { color: rgba(255,255,255,.25); }
+.reg-input:focus {
+  border-color: var(--amber-400);
+  background: rgba(255,255,255,.09);
+}
+.reg-input:focus::placeholder { color: rgba(255,255,255,.15); }
+.reg-submit {
+  margin-top: 4px;
+  width: 100%;
+  background: var(--amber-400);
+  color: var(--gray-850);
+  border: none;
+  border-radius: var(--btn-radius);
+  height: var(--btn-height);
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+  letter-spacing: .01em;
+}
+.reg-submit:hover {
+  background: var(--amber-500);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.reg-submit:active { transform: translateY(0); }
+.reg-privacy {
+  font-size: 11px; color: rgba(255,255,255,.3);
+  text-align: center; line-height: 1.6;
+}
+.reg-privacy a { color: rgba(255,255,255,.45); text-decoration: underline; }
+.reg-privacy a:hover { color: var(--amber-400); }
+/* Success state */
+.reg-success {
+  padding: 32px 20px 28px;
+  text-align: center;
+}
+.reg-success-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,153,0,.15);
+  border: 1.5px solid rgba(255,153,0,.4);
+  color: var(--amber-400);
+  font-size: 22px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+.reg-success-title {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 700;
+  color: #fff; margin-bottom: 8px;
+}
+.reg-success-sub {
+  font-size: 13px; color: rgba(255,255,255,.45);
+  line-height: 1.65;
+}
+
+.nav-brand img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+}
+
+.nav-brand img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+}
+
+.speaker-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.speaker-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Optional: hover effect */
+.speaker-card:hover .speaker-avatar {
+  transform: scale(1.05);
+  transition: 0.3s ease;
+}
+
+.logo-aws {
+  height: 80px;              /* ukuran kecil & elegan */
+  width: auto;
+  object-fit: contain;
+  opacity: 0.7;              /* lebih soft di footer */
+  transition: all 0.3s ease;
+  filter: grayscale(20%);
+}
+
+/* Hover effect biar interaktif */
+.logo-aws:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo-aws {
+    height: 40px;
+  }
+}
+
+.logo-all-data {
+  height: 60px;              /* ukuran kecil & elegan */
+  width: auto;
+  object-fit: contain;
+  opacity: 0.7;              /* lebih soft di footer */
+  transition: all 0.3s ease;
+  filter: grayscale(20%);
+}
+
+/* Hover effect biar interaktif */
+.logo-all-data:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo-all-data {
+    height: 40px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar">
+  <div class="container">
+    <a href="https://alldataint.com/" class="nav-brand">
+      <img src="asset/img/alldatainternational-aws-logo.png" alt="logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://alldataint.com/solutions/fmcg">Solutions</a></li>
+      <li><a href="https://alldataint.com/services">Services</a></li>
+      <li><a href="https://alldataint.com/company/about-us">Company</a></li>
+      <li><a href="https://alldataint.com/resources/articles">Resources</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://forms.cloud.microsoft/r/imJjtmHiuH" target="_blank" class="btn btn-amber" style="height:38px;padding:6px 20px;font-size:13px;">Daftar Sekarang</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Left -->
+      <div>
+        <div class="hero-eyebrow">
+          <div class="dot"></div>
+          <span class="t-label t-amber" style="text-transform:none;letter-spacing:.02em;font-size:12px;">All Data International × Amazon Web Services</span>
+        </div>
+        <h1 class="t-display-xl t-inv">
+          End-to-End<br>
+          <span class="highlight">Data Solution</span>
+        </h1>
+        <p class="t-body-lg t-inv-muted" style="max-width:440px;">
+          Build scalable data pipelines &amp; unlock real business insights dengan modern AWS data architecture.
+        </p>
+        <div class="hero-meta">
+          <!-- <div class="hero-meta-row">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span><strong>21 Mei 2026</strong> · Pukul 13.00 WIB – Selesai</span>
+          </div>
+          <div class="hero-meta-row">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <span><strong>AWS Office</strong> · Sinarmas MSIG Tower Lt.16, Jl. Sudirman Kav.21, South Jakarta</span>
+          </div> -->
+        </div>
+        <div class="hero-actions">
+          <a href="#overview" class="btn btn-secondary-inv">Lihat Detail Event</a>
+          <a href="#speakers" class="btn btn-secondary-inv">Lihat Pembicara</a>
+        </div>
+      </div>
+
+      <!-- Right panel — Embedded Form -->
+      <div class="hero-panel">
+        <img src="asset/img/hero-aws-1.jpg" alt="AWS Event" class="hero-image">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OVERVIEW ═══ -->
+<section class="section overview" id="overview">
+  <div class="container">
+    <div class="overview-grid">
+      <div>
+        <div class="reveal">
+          <span class="section-eyebrow t-blue">Event Overview</span>
+          <h2 class="t-display-lg">Kenapa Event Ini Penting untuk Bisnis Anda?</h2>
+          <p class="overview-desc">
+            Event ini memberikan pemahaman komprehensif tentang arsitektur data modern dan end-to-end data management — mulai dari membangun pipeline hingga mengimplementasikan business use case nyata seperti Customer 360.
+          </p>
+        </div>
+        <div class="overview-points">
+          <div class="overview-point reveal">
+            <div class="point-num">01</div>
+            <div>
+              <div class="point-title">Skalabilitas Data Pipeline</div>
+              <p class="point-desc">Pelajari cara membangun pipeline yang scalable dengan pendekatan Medallion Architecture di atas infrastruktur AWS yang proven.</p>
+            </div>
+          </div>
+          <div class="overview-point reveal">
+            <div class="point-num">02</div>
+            <div>
+              <div class="point-title">Governance &amp; Kepatuhan Regulasi</div>
+              <p class="point-desc">Implementasi data governance yang sesuai dengan regulasi PDP Indonesia dan standar GDPR internasional.</p>
+            </div>
+          </div>
+          <div class="overview-point reveal">
+            <div class="point-num">03</div>
+            <div>
+              <div class="point-title">Real Business Use Cases</div>
+              <p class="point-desc">Demo langsung Customer 360: upselling, cross-selling, CLTV, dan segmentasi pelanggan dengan SageMaker &amp; QuickSight.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="arch-card">
+          <div class="arch-card-header">
+            <span class="arch-card-title">AWS Architecture Flow</span>
+            <span style="font-size:11px;color:rgba(255,255,255,.3);">Medallion Model</span>
+          </div>
+          <div class="arch-flow">
+            <div class="arch-step">
+              <div class="arch-step-ico">📥</div>
+              <div>
+                <div class="arch-step-name">Data Ingestion</div>
+                <div class="arch-step-tools">Kinesis · S3 · DMS</div>
+              </div>
+              <span class="arch-tier">Bronze</span>
+            </div>
+            <div class="arch-connector"></div>
+            <div class="arch-step">
+              <div class="arch-step-ico">⚙️</div>
+              <div>
+                <div class="arch-step-name">Data Processing</div>
+                <div class="arch-step-tools">AWS Glue · Lambda</div>
+              </div>
+              <span class="arch-tier">Silver</span>
+            </div>
+            <div class="arch-connector"></div>
+            <div class="arch-step">
+              <div class="arch-step-ico">🗄️</div>
+              <div>
+                <div class="arch-step-name">Data Storage</div>
+                <div class="arch-step-tools">Redshift · Athena · RDS</div>
+              </div>
+              <span class="arch-tier">Gold</span>
+            </div>
+            <div class="arch-connector"></div>
+            <div class="arch-step">
+              <div class="arch-step-ico">📊</div>
+              <div>
+                <div class="arch-step-name">Analytics &amp; ML</div>
+                <div class="arch-step-tools">SageMaker · QuickSight</div>
+              </div>
+              <span class="arch-tier" style="color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.06);">Insight</span>
+            </div>
+          </div>
+          <div class="arch-card-footer">Powered by Amazon Web Services · Jakarta Region</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LEARNING ═══ -->
+<section class="section learning" id="learning">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-eyebrow t-blue">Kurikulum</span>
+      <h2 class="t-display-lg">Apa yang Akan Anda Pelajari</h2>
+      <p class="t-body" style="color:var(--color-text-faded);max-width:600px;margin-top:12px;">Materi dirancang untuk praktisi dan decision-maker — dari konsep arsitektur hingga implementasi nyata di lingkungan AWS.</p>
+    </div>
+    <div class="learn-grid">
+      <div class="learn-card reveal">
+        <div class="learn-num">01</div>
+        <h3>Medallion Architecture</h3>
+        <p>Pendekatan bertingkat Bronze → Silver → Gold untuk membangun data pipeline yang terstruktur, scalable, dan maintainable di long-term.</p>
+        <div class="learn-tags">
+          <span class="tag">Data Pipeline</span>
+          <span class="tag">Best Practice</span>
+        </div>
+      </div>
+      <div class="learn-card reveal">
+        <div class="learn-num">02</div>
+        <h3>Data Storage Strategy</h3>
+        <p>Strategi penyimpanan menggunakan Amazon S3, Redshift, Athena, dan RDS sesuai karakteristik data dan kebutuhan bisnis spesifik Anda.</p>
+        <div class="learn-tags">
+          <span class="tag">S3</span>
+          <span class="tag">Redshift</span>
+          <span class="tag">Athena</span>
+          <span class="tag">RDS</span>
+        </div>
+      </div>
+      <div class="learn-card reveal">
+        <div class="learn-num">03</div>
+        <h3>Data Quality &amp; Cleansing</h3>
+        <p>Pengecekan kualitas data, proses cleansing, dan transformasi menggunakan AWS Glue untuk memastikan data yang bersih dan reliable.</p>
+        <div class="learn-tags">
+          <span class="tag">AWS Glue</span>
+          <span class="tag">Data Quality</span>
+        </div>
+      </div>
+      <div class="learn-card reveal">
+        <div class="learn-num">04</div>
+        <h3>Customer 360 &amp; Use Cases</h3>
+        <p>Implementasi Customer 360 untuk up-selling, cross-selling, CLTV, dan segmentasi pelanggan menggunakan SageMaker dan QuickSight.</p>
+        <div class="learn-tags">
+          <span class="tag">SageMaker</span>
+          <span class="tag">QuickSight</span>
+          <span class="tag">CLTV</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SPEAKERS ═══ -->
+<section class="section speakers" id="speakers">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-eyebrow">Pembicara</span>
+      <h2 class="t-display-lg t-inv" style="margin-top:8px;">Bertemu dengan Para Ahli</h2>
+      <p class="t-body t-inv-muted" style="max-width:500px;margin:12px auto 0;">Pelajari langsung dari praktisi berpengalaman di bidang data engineering, cloud architecture, dan business intelligence.</p>
+    </div>
+    <div class="speakers-grid">
+      <div class="speaker-card reveal">
+      <div class="speaker-avatar">
+        <img src="asset/img/speakers/nadhira.webp" alt="Nadhira Pramatma">
+      </div>
+      <div class="speaker-name">Nadhira Pramatma</div>
+      <div class="speaker-role">VP of Technology</div>
+      <div class="speaker-org">All Data International</div>
+    </div>
+      <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/shandy.webp" alt="Nadhira Pramatma">
+        </div>
+        <div class="speaker-name">Shandy Tsalasa</div>
+        <div class="speaker-role">Solution Architect</div>
+        <div class="speaker-org">All Data International</div>
+      </div>
+      <!-- <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/alpin.webp" alt="Nadhira Pramatma">
+        </div>
+        <div class="speaker-name">Alpin Noza</div>
+        <div class="speaker-role">Data Science Lead</div>
+        <div class="speaker-org">All Data International</div>
+      </div>
+      <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/aditya.webp" alt="Nadhira Pramatma">
+        </div>
+        <div class="speaker-name">Aditya Permana</div>
+        <div class="speaker-role">Platform &amp; Data Engineer</div>
+        <div class="speaker-org">All Data International</div>
+      </div>
+      <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/aji.webp" alt="Nadhira Pramatma">
+        </div>
+        <div class="speaker-name">Aji Nugroho</div>
+        <div class="speaker-role">Account Manager</div>
+        <div class="speaker-org">All Data International</div>
+      </div> -->
+
+      <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/blank-profile-picture-973460_640.webp" alt="Nadhira Pramatma">
+        </div>
+        <div class="speaker-name">Lorem Ipsum</div>
+        <div class="speaker-role">Lorem Ipsum</div>
+        <div class="speaker-org">AWS</div>
+      </div>
+    
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DETAILS ═══ -->
+<section class="section details" id="detail-event">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-eyebrow t-blue">Detail Event</span>
+      <h2 class="t-display-lg">Informasi Acara</h2>
+    </div>
+    <div class="detail-4col" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;">
+      <div class="detail-row reveal" style="flex-direction:column;gap:12px;border:1px solid var(--color-border-low);border-radius:var(--radius-4);padding:20px;border-bottom:1px solid var(--color-border-low);">
+        <div class="detail-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="detail-label">Tanggal</div>
+          <div class="detail-value">21 Mei 2026</div>
+        </div>
+      </div>
+      <div class="detail-row reveal" style="flex-direction:column;gap:12px;border:1px solid var(--color-border-low);border-radius:var(--radius-4);padding:20px;border-bottom:1px solid var(--color-border-low);">
+        <div class="detail-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="detail-label">Waktu</div>
+          <div class="detail-value">13.00 WIB – Selesai</div>
+        </div>
+      </div>
+      <div class="detail-row reveal" style="flex-direction:column;gap:12px;border:1px solid var(--color-border-low);border-radius:var(--radius-4);padding:20px;border-bottom:1px solid var(--color-border-low);">
+        <div class="detail-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <div>
+          <div class="detail-label">Lokasi</div>
+          <div class="detail-value">AWS Office, South Jakarta</div>
+        </div>
+      </div>
+      <div class="detail-row reveal" style="flex-direction:column;gap:12px;border:1px solid var(--color-border-low);border-radius:var(--radius-4);padding:20px;border-bottom:1px solid var(--color-border-low);">
+        <div class="detail-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="detail-label">Penyelenggara</div>
+          <div class="detail-value">All Data International<br>Amazon Web Services</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BAND ═══ -->
+<section class="cta-band">
+  <div class="cta-band-inner reveal">
+    <span class="section-eyebrow" style="color:var(--amber-400);">Mulai Transformasi Data Anda</span>
+    <h2 class="t-display-md t-inv">Siap Memaksimalkan Kekuatan <span class="t-amber">Data</span> untuk Bisnis Anda?</h2>
+    <p class="t-body t-inv-muted sub">Jadikan data sebagai aset strategis bersama All Data International dan AWS — wujudkan transformasi data yang nyata dan terukur.</p>
+    <div class="cta-btns">
+      <a href="https://forms.cloud.microsoft/r/imJjtmHiuH" target="_blank" class="btn btn-amber">
+        Daftar Sekarang
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://staging-adi2026.alldataint.com/contact" class="btn btn-secondary-inv">Hubungi Kami</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <img src="asset/img/all-data-international-light.png" alt="all-data-logo" class="logo-all-data">
+        <div class="footer-brand-tagline">Driving Organizations into Smart Decisions with AI</div>
+        <div class="footer-social">
+          <a href="https://id.linkedin.com/company/all-data-international" target="_blank" class="social-icon" title="LinkedIn">
+            <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>
+          </a>
+          <a href="https://instagram.com/alldataint" target="_blank" class="social-icon" title="Instagram">
+            <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg>
+          </a>
+          <a href="https://facebook.com/alldataint" target="_blank" class="social-icon" title="Facebook">
+            <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+          </a>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <p style="font-size:13px;color:rgba(255,255,255,.25);margin-bottom:8px;">Partner Resmi</p>
+        <img src="asset/img/free-aws-logo-icon-svg-png-download-1583149.webp" alt="AWS" class="logo-aws">
+      </div>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h6>Solutions</h6>
+        <ul>
+          <li><a href="#">FMCG &amp; Retail</a></li>
+          <li><a href="#">Telecom</a></li>
+          <li><a href="#">Financial</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Services</h6>
+        <ul>
+          <li><a href="#">Consulting</a></li>
+          <li><a href="#">Use Case Development</a></li>
+          <li><a href="#">Managed Services</a></li>
+          <li><a href="#">Training</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Resources</h6>
+        <ul>
+          <li><a href="#">Articles</a></li>
+          <li><a href="#">Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Kontak</h6>
+        <ul>
+          <li><a href="tel:+622129319396">+62 21 2931 9396</a></li>
+          <li><a href="tel:+622129319397">+62 21 2931 9397</a></li>
+          <li><a href="mailto:info@alldataint.com">info@alldataint.com</a></li>
+          <li><a href="#">Grand Aries Niaga, Jakarta 11620</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">Copyright © 2026, All Data International. All Rights Reserved.</p>
+      <span class="footer-badge">Elevate Your Business with AI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('regForm');
+  const success = document.getElementById('regSuccess');
+  const submitBtn = form.querySelector('.reg-submit');
+
+  submitBtn.textContent = 'Memproses...';
+  submitBtn.disabled = true;
+
+  // Simulasi submit — di produksi ganti dengan fetch() ke endpoint
+  setTimeout(() => {
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }, 900);
+}
+</script>
+</body>
+</html>
