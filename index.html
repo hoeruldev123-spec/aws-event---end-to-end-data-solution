@@ -815,30 +815,75 @@ img { display: block; max-width: 100%; }
    CTA BAND
    ═══════════════════════════════════════════════════════════════ */
 .cta-band {
-  background: var(--gray-850);
+  background: #f9fafb; /* terang */
   padding: var(--space-xl) 0;
   text-align: center;
-  position: relative; overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
-/* Subtle noise texture feel */
+
+/* subtle pattern tetap ada tapi versi terang */
 .cta-band::before {
   content: '';
-  position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,.04) 1px, transparent 1px);
   background-size: 28px 28px;
 }
-/* amber glow */
+
+/* glow jadi soft biru/neutral */
 .cta-band::after {
   content: '';
-  position: absolute; left: 50%; top: -60px;
+  position: absolute;
+  left: 50%;
+  top: -60px;
   transform: translateX(-50%);
-  width: 600px; height: 300px;
-  background: radial-gradient(ellipse, rgba(255,153,0,.10) 0%, transparent 65%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(0,108,224,.08) 0%, transparent 65%);
 }
-.cta-band-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
-.cta-band h2 { margin: 12px 0 16px; }
-.cta-band .sub { margin-bottom: 36px; }
-.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.cta-band-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* TEXT JADI GELAP */
+.cta-band h2 {
+  margin: 12px 0 16px;
+  color: #111827;
+}
+
+.cta-band .sub {
+  margin-bottom: 36px;
+  color: #4b5563;
+}
+
+/* eyebrow tetap aksen */
+.cta-band .section-eyebrow {
+  color: var(--amber-500);
+}
+
+/* BUTTONS */
+.cta-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-band .btn-secondary-inv {
+  color: #111827;
+  border: 1px solid rgba(0,0,0,.15);
+  background: transparent;
+}
+
+.cta-band .btn-secondary-inv:hover {
+  background: rgba(0,0,0,.05);
+  border-color: rgba(0,0,0,.3);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    FOOTER
@@ -1722,47 +1767,92 @@ footer {
       <div class="reveal">
         <div class="arch-card">
           <div class="arch-card-header">
-            <span class="arch-card-title">AWS Architecture Flow</span>
-            <span style="font-size:11px;color:rgba(255,255,255,.3);">Medallion Model</span>
+            <span class="arch-card-title">Full Materials</span>
+            <span style="font-size:11px;color:rgba(255,255,255,.3);">AWS Workshop</span>
           </div>
+
           <div class="arch-flow">
+
             <div class="arch-step">
-              <div class="arch-step-ico">📥</div>
               <div>
-                <div class="arch-step-name">Data Ingestion</div>
-                <div class="arch-step-tools">Kinesis · S3 · DMS</div>
+                <div class="arch-step-name">Introduction</div>
+                <div class="arch-step-tools">
+                  Introduction to Medallion Architecture as an approach to modern data pipelines
+                </div>
               </div>
-              <span class="arch-tier">Bronze</span>
             </div>
+
             <div class="arch-connector"></div>
+
             <div class="arch-step">
-              <div class="arch-step-ico">⚙️</div>
-              <div>
-                <div class="arch-step-name">Data Processing</div>
-                <div class="arch-step-tools">AWS Glue · Lambda</div>
-              </div>
-              <span class="arch-tier">Silver</span>
-            </div>
-            <div class="arch-connector"></div>
-            <div class="arch-step">
-              <div class="arch-step-ico">🗄️</div>
               <div>
                 <div class="arch-step-name">Data Storage</div>
-                <div class="arch-step-tools">Redshift · Athena · RDS</div>
+                <div class="arch-step-tools">
+                  Data storage strategies using Amazon S3, Redshift, Athena, and RDS
+                </div>
               </div>
-              <span class="arch-tier">Gold</span>
             </div>
+
             <div class="arch-connector"></div>
+
             <div class="arch-step">
-              <div class="arch-step-ico">📊</div>
               <div>
-                <div class="arch-step-name">Analytics &amp; ML</div>
-                <div class="arch-step-tools">SageMaker · QuickSight</div>
+                <div class="arch-step-name">Data Quality</div>
+                <div class="arch-step-tools">
+                  Data quality checking using AWS Glue
+                </div>
               </div>
-              <span class="arch-tier" style="color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.06);">Insight</span>
             </div>
+
+            <div class="arch-connector"></div>
+
+            <div class="arch-step">
+              <div>
+                <div class="arch-step-name">Data Processing</div>
+                <div class="arch-step-tools">
+                  Data cleansing and transformation processes with AWS Glue
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <div class="arch-step">
+              <div>
+                <div class="arch-step-name">Data Governance</div>
+                <div class="arch-step-tools">
+                  Implementation of data governance within organizations
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <div class="arch-step">
+              <div>
+                <div class="arch-step-name">Compliance</div>
+                <div class="arch-step-tools">
+                  Compliance with data protection regulations (PDP & GDPR)
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <div class="arch-step">
+              <div>
+                <div class="arch-step-name">Customer 360 Use Cases</div>
+                <div class="arch-step-tools">
+                  Up-selling & cross-selling · Customer Lifetime Value (CLTV) · Customer segmentation using SageMaker & QuickSight
+                </div>
+              </div>
+            </div>
+
           </div>
-          <div class="arch-card-footer">Powered by Amazon Web Services · Jakarta Region</div>
+
+          <div class="arch-card-footer">
+            Powered by Amazon Web Services · Jakarta Region
+          </div>
         </div>
       </div>
     </div>
@@ -1908,47 +1998,12 @@ footer {
   </div>
 </section>
 
-<!-- ═══ DETAILS ═══ -->
-<section class="section details" id="detail-event">
-  <div class="container">
-    <div class="reveal">
-      <span class="section-eyebrow t-blue">Detail Event</span>
-      <h2 class="t-display-lg">Informasi Acara</h2>
-    </div>
-
-    <!-- Full Materials -->
-    <div class="materials-wrapper reveal">
-      <h3 class="materials-title">Full Materials</h3>
-
-      <div class="materials-list">
-        <ul>
-          <li>Introduction to Medallion Architecture as an approach to modern data pipelines</li>
-          <li>Data storage strategies using Amazon S3, Redshift, Athena, and RDS</li>
-          <li>Data quality checking using AWS Glue</li>
-          <li>Data cleansing and transformation processes with AWS Glue</li>
-          <li>Implementation of data governance within organizations</li>
-          <li>Compliance with data protection regulations (PDP & GDPR)</li>
-        
-          <li>Customer 360 use cases:
-                        <ul>
-                            <li>Up-selling &amp; cross-selling</li>
-                            <li>Customer Lifetime Value (CLTV)</li>
-                            <li>Customer segmentation using SageMaker &amp; QuickSight</li>
-                        </ul>
-                    </li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</section>
-
 <!-- ═══ CTA BAND ═══ -->
 <section class="cta-band">
   <div class="cta-band-inner reveal">
     <span class="section-eyebrow" style="color:var(--amber-400);">Mulai Transformasi Data Anda</span>
-    <h2 class="t-display-md t-inv">Siap Memaksimalkan Kekuatan <span class="t-amber">Data</span> untuk Bisnis Anda?</h2>
-    <p class="t-body t-inv-muted sub">Jadikan data sebagai aset strategis bersama All Data International dan AWS — wujudkan transformasi data yang nyata dan terukur.</p>
+    <h2 class="t-display-md">Siap Memaksimalkan Kekuatan <span class="t-amber">Data</span> untuk Bisnis Anda?</h2>
+    <p class="t-body sub">Jadikan data sebagai aset strategis bersama All Data International dan AWS — wujudkan transformasi data yang nyata dan terukur.</p>
     <div class="cta-btns">
       <a href="https://forms.cloud.microsoft/r/imJjtmHiuH" target="_blank" class="btn btn-amber">
         Daftar Sekarang
