@@ -114,8 +114,8 @@
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body {
   font-family: var(--font-body);
-  font-size: 19px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--color-text-body);
   background: var(--color-page-bg);
   overflow-x: hidden;
@@ -130,7 +130,7 @@ img { display: block; max-width: 100%; }
 .t-display-xl {
   font-family: var(--font-display);
   font-size: clamp(32px, 5vw, 54px);
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1.1;
   color: var(--color-text-title);
   letter-spacing: -0.015em;
@@ -157,10 +157,10 @@ img { display: block; max-width: 100%; }
   line-height: 1.3;
   color: var(--color-text-primary);
 }
-.t-body-lg { font-size: 21px; font-weight: 400; line-height: 1.75; color: var(--color-text-body); }
-.t-body    { font-size: 19px; font-weight: 400; line-height: 1.7; color: var(--color-text-body); }
-.t-body-sm { font-size: 17px; font-weight: 400; line-height: 1.6; color: var(--color-text-faded); }
-.t-label   { font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.t-body-lg { font-size: 18px; font-weight: 400; line-height: 1.6; color: var(--color-text-body); }
+.t-body    { font-size: 16px; font-weight: 400; line-height: 1.5; color: var(--color-text-body); }
+.t-body-sm { font-size: 14px; font-weight: 400; line-height: 1.43; color: var(--color-text-faded); }
+.t-label   { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 .t-inv     { color: #ffffff !important; }
 .t-inv-muted { color: rgba(255,255,255,.65) !important; }
 .t-amber { color: var(--amber-400); }
@@ -245,175 +245,161 @@ img { display: block; max-width: 100%; }
    NAVBAR
    ═══════════════════════════════════════════════════════════════ */
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background: #0f1923;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--gray-950);
   border-bottom: 1px solid rgba(255,255,255,.08);
   height: 64px;
-  display: flex;
-  align-items: center;
+  display: flex; align-items: center;
 }
-
-/* CONTAINER */
 .navbar .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-
-/* LOGO */
 .nav-brand {
-  display: flex;
-  align-items: center;
-  height: 64px;
-}
-
-.nav-brand img {
-  height: 50px !important;
-  width: auto;
-  object-fit: contain;
-  transition: all .3s ease;
-}
-
-.nav-brand img:hover {
-  opacity: .9;
-  transform: scale(1.03);
-}
-
-/* NAV LINKS */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links a {
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(255,255,255,.65);
+  display: flex; align-items: center; gap: 16px;
   text-decoration: none;
+}
+.nav-brand-adi {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: #ffffff; letter-spacing: -.01em;
+}
+.nav-sep { width: 1px; height: 20px; background: rgba(255,255,255,.18); }
+.nav-brand-aws {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 700;
+  color: var(--amber-400);
+  letter-spacing: .02em;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,.65);
   transition: color .2s;
 }
+.nav-links a:hover { color: #ffffff; }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
 
-.nav-links a:hover {
-  color: #ffffff;
-}
-
-/* ACTION BUTTON */
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .nav-links {
-    display: none;
-  }
-}
+@media (max-width: 900px) { .nav-links { display: none; } }
 
 /* ═══════════════════════════════════════════════════════════════
-   HERO — AWS Connected Community Style
+   HERO
    ═══════════════════════════════════════════════════════════════ */
 .hero {
-  background: linear-gradient(135deg, #f9a87a 0%, #e8a0c8 30%, #c9a0e8 55%, #a0b8f0 80%, #a8cef8 100%);
+  background: var(--gray-950);
   padding: 120px 0 80px;
-  min-height: 72vh;
+  min-height: 100vh;
   display: flex; align-items: center;
   position: relative;
   overflow: hidden;
 }
+/* Subtle dot grid — AWS-style */
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(160deg, rgba(249,168,122,.3) 0%, rgba(180,140,230,.2) 50%, rgba(160,184,240,.3) 100%);
+  background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+/* Amber glow top-right */
+.hero::after {
+  content: '';
+  position: absolute; top: -80px; right: -100px;
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, rgba(255,153,0,.10) 0%, transparent 60%);
   pointer-events: none;
 }
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 60px;
+  grid-template-columns: 1fr 420px;
+  gap: 64px;
   align-items: center;
   position: relative; z-index: 1;
 }
-.hero-badge-finished {
-  display: inline-block;
-  font-size: 12px; font-weight: 800; letter-spacing: .1em;
-  text-transform: uppercase;
-  color: #c0392b;
-  margin-bottom: 18px;
-}
-.hero h1 { margin: 0 0 20px; }
-.hero h1 .highlight { color: var(--gray-850); }
-.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
-.hero-actions .btn-primary {
-  background: var(--gray-850);
-  color: #fff;
-  border-color: var(--gray-850);
-}
-.hero-actions .btn-secondary {
-  background: transparent;
-  color: var(--gray-850);
-  border-color: var(--gray-850);
-}
-
-/* Right panel — Event Info Card */
-.hero-panel {
-  background: rgba(255,255,255,.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,.6);
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 8px 40px rgba(0,0,0,.12);
-}
-.hero-info-row {
-  display: flex; gap: 14px; align-items: flex-start;
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,153,0,.1);
+  border: 1px solid rgba(255,153,0,.25);
+  color: var(--amber-400);
+  padding: 5px 14px;
+  border-radius: var(--radius-10);
   margin-bottom: 20px;
 }
-.hero-info-row:last-of-type { margin-bottom: 24px; }
-.hero-info-icon {
+.hero-eyebrow .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%; background: var(--amber-400);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.hero h1 { margin: 12px 0 20px; }
+.hero h1 .highlight { color: var(--amber-400); }
+.hero-meta {
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 28px 0 36px;
+}
+.hero-meta-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: rgba(255,255,255,.55);
+}
+.hero-meta-row svg { color: var(--amber-400); flex-shrink: 0; margin-top: 1px; }
+.hero-meta-row strong { color: rgba(255,255,255,.85); font-weight: 500; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Right panel */
+.hero-panel {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-4);
+  overflow: hidden;
+}
+.hero-panel-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hero-panel-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--amber-400);
+}
+.hero-panel-badge {
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.06);
+  padding: 2px 8px; border-radius: var(--radius-10);
+}
+.hero-topics { padding: 8px 0; }
+.hero-topic {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 20px;
+  transition: background .2s;
+}
+.hero-topic:hover { background: rgba(255,255,255,.04); }
+.hero-topic + .hero-topic { border-top: 1px solid rgba(255,255,255,.05); }
+.topic-icon {
   width: 36px; height: 36px; flex-shrink: 0;
+  border-radius: var(--radius-2);
+  background: rgba(255,153,0,.12);
   display: flex; align-items: center; justify-content: center;
-  color: var(--gray-600);
+  font-size: 17px;
 }
-.hero-info-label {
-  font-size: 13px; font-weight: 700;
-  color: var(--gray-700);
-  margin-bottom: 3px;
-}
-.hero-info-value {
-  font-size: 14px; color: var(--blue-600);
-  line-height: 1.5; font-weight: 500;
-}
-.hero-info-value.plain { color: var(--gray-700); }
-.hero-panel-divider {
-  border: none; border-top: 1px solid rgba(0,0,0,.08);
-  margin: 4px 0 20px;
-}
-.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-.hero-tag {
-  font-size: 13px; font-weight: 500;
-  padding: 5px 14px; border-radius: 20px;
-  border: 1.5px solid var(--gray-350);
-  color: var(--gray-650);
-  background: rgba(255,255,255,.7);
+.topic-text { font-size: 14px; font-weight: 500; color: rgba(255,255,255,.85); }
+.topic-sub  { font-size: 12px; color: rgba(255,255,255,.35); margin-top: 2px; }
+.hero-panel-footer {
+  padding: 14px 20px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,153,0,.06);
+  font-size: 12px; color: rgba(255,255,255,.45);
+  display: flex; align-items: center; gap: 6px;
 }
 
 @media (max-width: 960px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
-  .hero-panel { max-width: 400px; }
-}
-@media (max-width: 600px) {
-  .hero { padding: 100px 0 56px; min-height: auto; }
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-panel { display: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -576,110 +562,54 @@ img { display: block; max-width: 100%; }
 @media (max-width: 600px) { .learn-grid { grid-template-columns: 1fr; } }
 
 /* ═══════════════════════════════════════════════════════════════
-   AGENDA
+   SPEAKERS
    ═══════════════════════════════════════════════════════════════ */
-.agenda { background: var(--gray-950); }
-
-.agenda .section-eyebrow { color: var(--amber-400); }
-
-.agenda .section-eyebrow::before { 
-  background: var(--amber-400); 
-}
-
-/* Agenda Layout */
-.agenda-list {
+.speakers { background: var(--gray-950); }
+.speakers .section-eyebrow { color: var(--amber-400); }
+.speakers .section-eyebrow::before { background: var(--amber-400); }
+.speakers-grid {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  justify-content: center;
   margin-top: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
 }
-
-.agenda-item {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-/* Time (kiri) */
-.agenda-time {
-  width: 140px;
-  font-size: 14px;
-  color: rgba(255,255,255,.7);
-  text-align: right;
-  line-height: 1.4;
-}
-
-/* Card (kanan) */
-.agenda-card {
-  flex: 1;
-  padding: 18px 20px;
-  border-radius: 14px;
-  background: rgba(255,255,255,.06);
+.speaker-card {
+  background: rgba(255,255,255,.05);
   border: 1px solid rgba(255,255,255,.1);
-  color: #fff;
-  font-weight: 600;
-  letter-spacing: .02em;
-  line-height: 1.5;
+  border-radius: var(--radius-4);
+  padding: 24px 20px;
+  width: 186px;
   text-align: center;
-  transition: all .25s ease;
-  align-items: center;
+  transition: background .25s, border-color .25s, transform .25s;
+}
+.speaker-card:hover {
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,153,0,.35);
+  transform: translateY(-3px);
+}
+.speaker-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  color: rgba(255,255,255,.8);
+  border: 1.5px solid rgba(255,153,0,.3);
+  background: linear-gradient(135deg, rgba(255,153,0,.15) 0%, rgba(0,108,224,.15) 100%);
+}
+.speaker-name {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 700;
+  color: #ffffff; margin-bottom: 4px;
+}
+.speaker-role { font-size: 12px; color: rgba(255,255,255,.4); line-height: 1.5; }
+.speaker-org {
+  margin-top: 10px;
+  font-size: 10px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--amber-400);
 }
 
-.agenda-time span {
-  display: block;
-  font-size: 12px;
-  color: rgba(255,255,255,.5);
-  margin-top: 2px;
-}
-
-.agenda-card small {
-  display: block;
-  font-size: 12px;
-  color: rgba(255,255,255,.6);
-  margin-top: 4px;
-  line-height: 1.4;
-}
-
-.agenda-card:hover {
-  background: rgba(255,255,255,.1);
-  transform: translateY(-2px);
-}
-
-/* Highlight (biru seperti gambar) */
-.agenda-card.highlight {
-  background: #1f3f5b;
-  border: none;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .agenda-item {
-    display: grid;
-    grid-template-columns: 80px 1fr; /* kiri waktu, kanan agenda */
-    gap: 12px;
-    align-items: center;
-  }
-
-  .agenda-time {
-    width: 100%;
-    text-align: left;
-    font-size: 12px;
-    line-height: 1.4;
-  }
-
-  .agenda-time span {
-    font-size: 11px;
-  }
-
-  .agenda-card {
-    padding: 12px;
-    font-size: 13px;
-    text-align: left;
-  }
-
-  .agenda-card small {
-    font-size: 11px;
-  }
+@media (max-width: 600px) {
+  .speaker-card { width: calc(50% - 8px); }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -763,52 +693,6 @@ img { display: block; max-width: 100%; }
 }
 @media (max-width: 700px) {
   .detail-4col { grid-template-columns: 1fr 1fr !important; }
-}
-
-/* Materials inside detail section */
-.materials-wrapper {
-  margin-top: 40px;
-  padding: 24px;
-  border: 1px solid var(--color-border-low);
-  border-radius: var(--radius-4);
-   background: linear-gradient(
-    135deg,
-    #f9a87a 0%,
-    #e8a0c8 30%,
-    #c9a0e8 55%,
-    #a0b8f0 80%,
-    #a8cef8 100%
-  );
-}
-
-.materials-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-.materials-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.materials-list ul {
-  padding-left: 18px;
-}
-
-.materials-list li {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--color-text-muted);
-  margin-bottom: 6px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .materials-list {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1088,53 +972,6 @@ footer {
   }
 }
 
-/* Hero Speaker Cards */
-.hero-speakers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 20px;
-  max-width: 500px;
-}
-.hero-speaker-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;                 /* tambah jarak biar lega */
-  padding: 14px 16px;       /* sebelumnya kecil → diperbesar */
-  background: rgba(255,255,255,.55);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,.7);
-  border-radius: 14px;
-  transition: all .25s ease;
-}
-
-.hero-speaker-card:hover {
-  background: rgba(255,255,255,.75);
-  transform: translateY(-2px);
-}
-
-.hero-speaker-avatar {
-  width: 60px;              /* dari 40px → 60px (lebih dominan) */
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  border: 2px solid rgba(255,255,255,.85);
-  box-shadow: 0 4px 12px rgba(0,0,0,.15);
-}
-
-.hero-speaker-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.hero-speaker-name {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.hero-speaker-role {
-  font-size: 12px;
-}
-@media (max-width: 500px) { .hero-speakers { grid-template-columns: 1fr; } }
- 
-
 </style>
 </head>
 <body>
@@ -1143,7 +980,7 @@ footer {
 <nav class="navbar">
   <div class="container">
     <a href="https://alldataint.com/" class="nav-brand">
-      <img src="asset/img/alldatainternational-aws-logo-light.png" alt="logo" />
+      <img src="asset/img/alldatainternational-aws-logo.png" alt="logo" />
     </a>
     <ul class="nav-links">
       <li><a href="https://alldataint.com/solutions/fmcg">Solutions</a></li>
@@ -1161,83 +998,38 @@ footer {
 <section class="hero">
   <div class="container">
     <div class="hero-grid">
-      <!-- Left — Judul & keterangan -->
+      <!-- Left -->
       <div>
-        <div class="hero-badge-finished">All Data International X AWS</div>
-        <h1 class="t-display-xl">
+        <div class="hero-eyebrow">
+          <div class="dot"></div>
+          <span class="t-label t-amber" style="text-transform:none;letter-spacing:.02em;font-size:12px;">All Data International × Amazon Web Services</span>
+        </div>
+        <h1 class="t-display-xl t-inv">
           End-to-End<br>
           <span class="highlight">Data Solution</span>
         </h1>
-        <div class="hero-speakers">
-          <div class="hero-speaker-card">
-            <div class="hero-speaker-avatar">
-              <img src="asset/img/speakers/nadhira.webp" alt="Nadhira Pramatma">
-            </div>
-            <div>
-              <div class="hero-speaker-name">Nadhira Pramatma</div>
-              <div class="hero-speaker-role">VP of Technology</br>All Data International</div>
-            </div>
+        <p class="t-body-lg t-inv-muted" style="max-width:440px;">
+          Build scalable data pipelines &amp; unlock real business insights dengan modern AWS data architecture.
+        </p>
+        <div class="hero-meta">
+          <!-- <div class="hero-meta-row">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span><strong>21 Mei 2026</strong> · Pukul 13.00 WIB – Selesai</span>
           </div>
-          <div class="hero-speaker-card">
-            <div class="hero-speaker-avatar">
-              <img src="asset/img/speakers/shandy.webp" alt="Shandy Tsalasa">
-            </div>
-            <div>
-              <div class="hero-speaker-name">Shandy Tsalasa</div>
-              <div class="hero-speaker-role">Solution Architect</br>All Data International</div>
-            </div>
-          </div>
-          <div class="hero-speaker-card">
-            <div class="hero-speaker-avatar">
-              <img src="asset/img/speakers/blank-profile-picture-973460_640.webp" alt="Speaker AWS">
-            </div>
-            <div>
-              <div class="hero-speaker-name">Lorem Ipsum</div>
-              <div class="hero-speaker-role">Lorem Ipsum</br>AWS</div>
-            </div>
-          </div>
-          
+          <div class="hero-meta-row">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <span><strong>AWS Office</strong> · Sinarmas MSIG Tower Lt.16, Jl. Sudirman Kav.21, South Jakarta</span>
+          </div> -->
         </div>
         <div class="hero-actions">
-          <a href="#overview" class="btn btn-primary">Lihat Detail Event</a>
-          <a href="#agenda" class="btn btn-secondary">Lihat Rundown</a>
+          <a href="#overview" class="btn btn-secondary-inv">Lihat Detail Event</a>
+          <a href="#speakers" class="btn btn-secondary-inv">Lihat Pembicara</a>
         </div>
       </div>
 
-      <!-- Right — Event Info Card seperti referensi -->
+      <!-- Right panel — Embedded Form -->
       <div class="hero-panel">
-        <div class="hero-info-row">
-          <div class="hero-info-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          </div>
-          <div>
-            <div class="hero-info-label">Lokasi</div>
-            <div class="hero-info-value">Jl. Jenderal Sudirman, Jakarta Selatan</a></div>
-          </div>
-        </div>
-        <div class="hero-info-row">
-          <div class="hero-info-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          </div>
-          <div>
-            <div class="hero-info-label">Tanggal</div>
-            <div class="hero-info-value plain">Rabu, 21 Mei 2026</div>
-          </div>
-        </div>
-        <div class="hero-info-row">
-          <div class="hero-info-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div>
-            <div class="hero-info-label">Waktu</div>
-            <div class="hero-info-value plain">13:00 – Selesai (WIB / GMT+7)</div>
-          </div>
-        </div>
-        <hr class="hero-panel-divider">
-        <div class="hero-tags">
-          <span class="hero-tag">Workshop</span>
-          
-        </div>
+        <img src="asset/img/hero-aws-1.jpg" alt="AWS Event" class="hero-image">
       </div>
     </div>
   </div>
@@ -1382,89 +1174,65 @@ footer {
   </div>
 </section>
 
-<!-- ═══ AGENDA ═══ -->
-<section class="section agenda" id="agenda">
+<!-- ═══ SPEAKERS ═══ -->
+<section class="section speakers" id="speakers">
   <div class="container">
     <div class="reveal" style="text-align:center;">
-      <span class="section-eyebrow">Agenda</span>
-      <h2 class="t-display-lg t-inv" style="margin-top:8px;">Rundown Event</h2>
+      <span class="section-eyebrow">Pembicara</span>
+      <h2 class="t-display-lg t-inv" style="margin-top:8px;">Bertemu dengan Para Ahli</h2>
+      <p class="t-body t-inv-muted" style="max-width:500px;margin:12px auto 0;">Pelajari langsung dari praktisi berpengalaman di bidang data engineering, cloud architecture, dan business intelligence.</p>
     </div>
-
-    <div class="agenda-list">
-
-      <div class="agenda-item">
-        <div class="agenda-time">12.30 - 13.00<br><span>30 minutes</span></div>
-        <div class="agenda-card">Open Registration</div>
+    <div class="speakers-grid">
+      <div class="speaker-card reveal">
+      <div class="speaker-avatar">
+        <img src="asset/img/speakers/nadhira.webp" alt="Nadhira Pramatma">
       </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">13:00 – 13:15<br><span>15 minutes</span></div>
-        <div class="agenda-card">Opening & Introduction</div>
-      </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">13:15 – 13:45<br><span>30 minutes</span></div>
-        <div class="agenda-card">
-          General Explanation of End-to-End Data Solutions<br>
-          <small>(Customer 360, Transformation, Architecture, AWS)</small>
+      <div class="speaker-name">Nadhira Pramatma</div>
+      <div class="speaker-role">VP of Technology</div>
+      <div class="speaker-org">All Data International</div>
+    </div>
+      <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/shandy.webp" alt="Nadhira Pramatma">
         </div>
+        <div class="speaker-name">Shandy Tsalasa</div>
+        <div class="speaker-role">Solution Architect</div>
+        <div class="speaker-org">All Data International</div>
       </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">13:45 – 14:15<br><span>30 minutes</span></div>
-        <div class="agenda-card">
-          Data Storage with AWS<br>
-          <small>(S3, RDS, Redshift) & Medallion Architecture</small>
+      <!-- <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/alpin.webp" alt="Nadhira Pramatma">
         </div>
+        <div class="speaker-name">Alpin Noza</div>
+        <div class="speaker-role">Data Science Lead</div>
+        <div class="speaker-org">All Data International</div>
       </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">14:15 – 14:45<br><span>30 minutes</span></div>
-        <div class="agenda-card">
-          Data Engineering with AWS<br>
-          <small>(Ingestion, Data Quality, Cleansing, Glue, DMS)</small>
+      <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/aditya.webp" alt="Nadhira Pramatma">
         </div>
+        <div class="speaker-name">Aditya Permana</div>
+        <div class="speaker-role">Platform &amp; Data Engineer</div>
+        <div class="speaker-org">All Data International</div>
       </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">14:45 – 15:00<br><span>15 minutes</span></div>
-        <div class="agenda-card highlight">Q&A</div>
-      </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">15:00 – 15:15<br><span>15 minutes</span></div>
-        <div class="agenda-card highlight">Break</div>
-      </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">15:15 – 15:45<br><span>30 minutes</span></div>
-        <div class="agenda-card">
-          Data Governance with AWS<br>
-          <small>(Metadata, Catalog, RBAC, Masking)</small>
+      <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/aji.webp" alt="Nadhira Pramatma">
         </div>
-      </div>
+        <div class="speaker-name">Aji Nugroho</div>
+        <div class="speaker-role">Account Manager</div>
+        <div class="speaker-org">All Data International</div>
+      </div> -->
 
-      <div class="agenda-item">
-        <div class="agenda-time">15:45 – 16:30<br><span>45 minutes</span></div>
-        <div class="agenda-card">
-          Sample Analysis of Customer 360<br>
-          <small>(Upselling, CLV, Churn, Segmentation with SageMaker & QuickSight)</small>
+      <div class="speaker-card reveal">
+        <div class="speaker-avatar">
+          <img src="asset/img/speakers/blank-profile-picture-973460_640.webp" alt="Nadhira Pramatma">
         </div>
+        <div class="speaker-name">Lorem Ipsum</div>
+        <div class="speaker-role">Lorem Ipsum</div>
+        <div class="speaker-org">AWS</div>
       </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">16:30 – 16:35<br><span>5 minutes</span></div>
-        <div class="agenda-card highlight">Q&A</div>
-      </div>
-
-      <div class="agenda-item">
-        <div class="agenda-time">16:35 – 16:40<br><span>15 minutes</span></div>
-        <div class="agenda-card highlight">
-          Closing & Sales Session<br>
-          <small>(How to Contact All Data)</small>
-        </div>
-      </div>
-
+    
     </div>
   </div>
 </section>
@@ -1476,31 +1244,44 @@ footer {
       <span class="section-eyebrow t-blue">Detail Event</span>
       <h2 class="t-display-lg">Informasi Acara</h2>
     </div>
-
-    <!-- Full Materials -->
-    <div class="materials-wrapper reveal">
-      <h3 class="materials-title">Full Materials</h3>
-
-      <div class="materials-list">
-        <ul>
-          <li>Introduction to Medallion Architecture as an approach to modern data pipelines</li>
-          <li>Data storage strategies using Amazon S3, Redshift, Athena, and RDS</li>
-          <li>Data quality checking using AWS Glue</li>
-          <li>Data cleansing and transformation processes with AWS Glue</li>
-          <li>Implementation of data governance within organizations</li>
-          <li>Compliance with data protection regulations (PDP & GDPR)</li>
-        
-          <li>Customer 360 use cases:
-                        <ul>
-                            <li>Up-selling &amp; cross-selling</li>
-                            <li>Customer Lifetime Value (CLTV)</li>
-                            <li>Customer segmentation using SageMaker &amp; QuickSight</li>
-                        </ul>
-                    </li>
-        </ul>
+    <div class="detail-4col" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;">
+      <div class="detail-row reveal" style="flex-direction:column;gap:12px;border:1px solid var(--color-border-low);border-radius:var(--radius-4);padding:20px;border-bottom:1px solid var(--color-border-low);">
+        <div class="detail-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="detail-label">Tanggal</div>
+          <div class="detail-value">21 Mei 2026</div>
+        </div>
+      </div>
+      <div class="detail-row reveal" style="flex-direction:column;gap:12px;border:1px solid var(--color-border-low);border-radius:var(--radius-4);padding:20px;border-bottom:1px solid var(--color-border-low);">
+        <div class="detail-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="detail-label">Waktu</div>
+          <div class="detail-value">13.00 WIB – Selesai</div>
+        </div>
+      </div>
+      <div class="detail-row reveal" style="flex-direction:column;gap:12px;border:1px solid var(--color-border-low);border-radius:var(--radius-4);padding:20px;border-bottom:1px solid var(--color-border-low);">
+        <div class="detail-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <div>
+          <div class="detail-label">Lokasi</div>
+          <div class="detail-value">AWS Office, South Jakarta</div>
+        </div>
+      </div>
+      <div class="detail-row reveal" style="flex-direction:column;gap:12px;border:1px solid var(--color-border-low);border-radius:var(--radius-4);padding:20px;border-bottom:1px solid var(--color-border-low);">
+        <div class="detail-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="detail-label">Penyelenggara</div>
+          <div class="detail-value">All Data International<br>Amazon Web Services</div>
+        </div>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -1540,8 +1321,8 @@ footer {
         </div>
       </div>
       <div style="text-align:right;">
-        <p style="font-size:13px;color:rgb(255, 255, 255);margin-bottom:8px;"><strong>Partner Resmi</strong></p>
-        <img src="asset/img/amazon-web-services.png" alt="AWS" class="logo-aws">
+        <p style="font-size:13px;color:rgba(255,255,255,.25);margin-bottom:8px;">Partner Resmi</p>
+        <img src="asset/img/free-aws-logo-icon-svg-png-download-1583149.webp" alt="AWS" class="logo-aws">
       </div>
     </div>
 
