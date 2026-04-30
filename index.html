@@ -269,6 +269,27 @@ footer .footer-badge {
 
 .btn-amber:hover { background: var(--amber-500); border-color: var(--amber-500); color: #fff; }
 
+/* Highlight span */
+.highlight {
+  position: relative;
+  display: inline-block;
+  animation: scaleIn 0.5s ease-out 0.2s both;
+}
+
+.highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(90deg, #f90, #f90);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: scaleIn 0.6s ease-out 0.5s forwards;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    3. LAYOUT & CONTAINER
    ═══════════════════════════════════════════════════════════════ */
@@ -1163,7 +1184,7 @@ footer {
         <div class="hero-badge-finished">All Data International X AWS</div>
         <h1 class="t-display-xl">
           End-to-End<br>
-          <span class="highlight">Data Solution</span>
+          <span class="highlight">Data Solution<br>Customer 360</span>
         </h1>
         <div class="hero-speakers">
           <div class="hero-speaker-card">
